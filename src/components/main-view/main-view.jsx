@@ -1,47 +1,24 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-    const [movies, setMovies] = useState([
-        {
-            id: 1,
-            title: "Star Wars: Episode III",
-            image:
-              "https://dyn1.heritagestatic.com/lf?set=path%5B1%2F3%2F5%2F2%2F2%2F13522913%5D&call=url%5Bfile%3Aproduct.chain%5D",
-            director: "George Lucas"
-          },
-          {
-            id: 2,
-            title: "Se7en",
-            image:
-              "https://m.media-amazon.com/images/I/81A--37cLmL._AC_UF894,1000_QL80_.jpg",
-            director: "David Fincher"
-          },
-          {
-            id: 3,
-            title: "Kill Bill",
-            image:
-              "https://m.media-amazon.com/images/I/81Az82YYZaS.jpg",
-            director: "Quentin Tarantino"
-          },
-          {
-            id: 4,
-            title: "The Big Short",
-            image:
-              "https://m.media-amazon.com/images/I/91dC4o8mScL._AC_UF894,1000_QL80_.jpg",
-            director: "Adam McKay"
-          },
-          {
-            id: 5,
-            title: "Once Upon a Time... in Hollywood",
-            image:
-              "https://m.media-amazon.com/images/I/A1t6lwCERdL.jpg",
-            director: "Quentin Tarantino"
-          }
-        ]);
+    const [movies, setMovies] = useState([]);
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
-        const [selectedMovie, setSelectedMovie] = useState(null);
+        useEffect(() => {
+            //fetching movies from heroku api
+            fetch("https://movies-by-francisco97-7cb1503aab2b.herokuapp.com/movies")
+            .then((response) => response.json())
+            .then((data) => {
+                //updating movies with fetched data
+                setMovies(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching movies:", error);
+            });
+    }, []);
 
         if (selectedMovie) {
             return <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />;
@@ -64,4 +41,11 @@ export const MainView = () => {
             ))}
         </div>
     );
-}
+};
+
+//MainView PropTypes defined
+MainView.propTypes = {
+    movies: PropTypes.array.isRequired,
+    selectedMovie: PropTypes.object,
+    setSelectedMovie: PropTypes.func.isRequired,
+};
