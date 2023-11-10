@@ -27172,57 +27172,27 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MainView", ()=>MainView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-    const [movies, setMovies] = (0, _react.useState)([
-        {
-            id: 1,
-            title: "Star Wars: Episode III",
-            image: "https://dyn1.heritagestatic.com/lf?set=path%5B1%2F3%2F5%2F2%2F2%2F13522913%5D&call=url%5Bfile%3Aproduct.chain%5D",
-            director: "George Lucas"
-        },
-        {
-            id: 2,
-            title: "Se7en",
-            image: "https://m.media-amazon.com/images/I/81A--37cLmL._AC_UF894,1000_QL80_.jpg",
-            director: "David Fincher"
-        },
-        {
-            id: 3,
-            title: "Kill Bill",
-            image: "https://m.media-amazon.com/images/I/81Az82YYZaS.jpg",
-            director: "Quentin Tarantino"
-        },
-        {
-            id: 4,
-            title: "The Big Short",
-            image: "https://m.media-amazon.com/images/I/91dC4o8mScL._AC_UF894,1000_QL80_.jpg",
-            director: "Adam McKay"
-        },
-        {
-            id: 5,
-            title: "Once Upon a Time... in Hollywood",
-            image: "https://m.media-amazon.com/images/I/A1t6lwCERdL.jpg",
-            director: "Quentin Tarantino"
-        }
-    ]);
+    const [movies, setMovies] = (0, _react.useState)([]);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 47,
+        lineNumber: 11,
         columnNumber: 20
     }, undefined);
     if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 51,
+        lineNumber: 15,
         columnNumber: 20
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27233,16 +27203,16 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 57,
+                lineNumber: 21,
                 columnNumber: 17
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 55,
+        lineNumber: 19,
         columnNumber: 9
     }, undefined);
 };
-_s(MainView, "nd3p32e/Kgs994Ehh253t2s7uqQ=");
+_s(MainView, "jzuc4/Y81KLA8pUTcmWNL/aPH2I=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
