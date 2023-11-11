@@ -30,7 +30,7 @@ export const MainView = () => {
         
     return (
         <div>
-            {movies.map((movie) => (
+            {movies && movies.map((movie) => (
                 <MovieCard
                     key={movie.id}
                     movie={movie}
