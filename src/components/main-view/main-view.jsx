@@ -2,23 +2,50 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("t4oken");
     const [movies, setMovies] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState(null);
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(null);
 
         useEffect(() => {
-            //fetching movies from heroku api
-            fetch("https://movies-by-francisco97-7cb1503aab2b.herokuapp.com/movies")
-            .then((response) => response.json())
-            .then((data) => {
-                //updating movies with fetched data
-                setMovies(data);
+             if (!token) {
+                return;
+              }
+                //fetching movies from heroku api
+            fetch("https://movies-by-francisco97-7cb1503aab2b.herokuapp.com/movies", {
+                headers: { Authorization: `Bearer ${token}` }
             })
-            .catch((error) => {
-                console.error("Error fetching movies:", error);
-            });
-    }, []);
+                .then((response) => response.json())
+                .then((data) => {
+                    //updating movies with fetched data
+                    console.log(data);
+                    setMovies(data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching movies:", error);
+                });
+        }, [token]);
+
+    if (!user) {
+        return (
+                <>
+                    <LoginView 
+                        onLoggedIn={(user, token) => {
+                            setUser(user);
+                            setToken(token);
+                        }} 
+                    />
+                    or
+                    <SignupView />
+                </>
+            );
+    }
 
         if (selectedMovie) {
             return <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />;
@@ -39,6 +66,10 @@ export const MainView = () => {
                     }}
                 />
             ))}
+            <button onClick={() => { 
+                setUser(null);
+                setToken(null);
+            }}>Logout</button>
         </div>
     );
 };
