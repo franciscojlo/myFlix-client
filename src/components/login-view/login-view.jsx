@@ -4,14 +4,17 @@ export const LoginView = ({ onLoggedIn }) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
 
   const handleSubmit = (event) => {
-    // this prevents the default behavior of the form which is to reload the entire page
     event.preventDefault();
 
     const data = {
       Username: username,
-      Password: password
+      Password: password,
+      Email: email,
+      Birthday: birthday
     };
 
     fetch("https://movies-by-francisco97-7cb1503aab2b.herokuapp.com/login", {
