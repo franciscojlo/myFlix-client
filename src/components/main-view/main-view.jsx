@@ -15,24 +15,44 @@ export const MainView = () => {
     const [user, setUser] = useState(storedUser ? storedUser : null);
     const [token, setToken] = useState(storedToken ? storedToken : null);
 
-        useEffect(() => {
-             if (!token) {
-                return;
-              }
-                //fetching movies from heroku api
-            fetch("https://movies-by-francisco97-7cb1503aab2b.herokuapp.com/movies", {
-                headers: { Authorization: `Bearer ${token}` }
+    // Check for stored user and token
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        const storedToken = localStorage.getItem("token");
+
+        setUser(storedUser ? JSON.parse(storedUser) : null);
+        setToken(storedToken ? storedToken : null);
+    }, []);
+
+    //Function to handle logout
+    const handleLogout = () => {
+        //Clear user and token from state
+        setUser(null);
+        setToken(null);
+
+        // Clear user and token from local storage
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+    };
+
+    useEffect(() => {
+            if (!token) {
+            return;
+            }
+            //fetching movies from heroku api
+        fetch("https://movies-by-francisco97-7cb1503aab2b.herokuapp.com/movies", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                //updating movies with fetched data
+                console.log(data);
+                setMovies(data);
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    //updating movies with fetched data
-                    console.log(data);
-                    setMovies(data);
-                })
-                .catch((error) => {
-                    console.error("Error fetching movies:", error);
-                });
-        }, [token]);
+            .catch((error) => {
+                console.error("Error fetching movies:", error);
+            });
+    }, [token]);
 
     if (!user) {
         return (
@@ -68,10 +88,7 @@ export const MainView = () => {
                     }}
                 />
             ))}
-            <button onClick={() => { 
-                setUser(null);
-                setToken(null);
-            }}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 };
